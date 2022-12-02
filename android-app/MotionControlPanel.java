@@ -62,7 +62,7 @@ public class MotionControlPanel {
 
     byte calcSpeed(int pos, int max, float factor) {
         pos = clamp(pos, -max, max);
-        int speed = (int)(pos * factor);
+        float speed = pos * factor;
         speed = speed * abs(speed) / MAX_SPEED;
 
         return (byte)speed;
