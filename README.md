@@ -16,3 +16,16 @@ The *android-app* folder contains the changed and additional files of a standard
 Now the Tumbller can be moved with the red dot. With the DOWN button it can be placed in the rest position (function 4 - Tilt Forward). Press UP and it gets back up (function 5 - Stand Up Instantly).
 
 The Rocker Control in the Elegoo BLE Tool looks good. But it is not possible to go from cornering to driving straight ahead without stopping in between.
+
+### Extra: programmable motion
+Install TinyB from https://github.com/intel-iot-devkit/tinyb
+
+Compile it, for example:
+```
+javac -cp /usr/local/lib/java/tinyb.jar -d bin tumbller/*.java
+```
+Run it, for example:
+```
+java -cp bin:/usr/local/lib/java/tinyb.jar -Djava.library.path=/usr/local/lib tumbller.ProgrammableMotion
+```
+Have fun!
