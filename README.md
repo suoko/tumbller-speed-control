@@ -9,7 +9,7 @@ tumbller-speed-control includes an extension of the included Arduino sketch and 
 Only the *.ino* file and *mode.h* have been changed. *SpeedControl.h* is a new additional file. The other files of the original sketch are taken over unchanged in order to load the program onto the Tumbller with the Arduino IDE. With the new program, the functions and modes of the old program will continue to work. Also the Elegoo BLE Tool works (if the tumbller-speed-control app is not running).
 
 ### The Android app
-The *android-app* folder contains the changed and additional files of a standard Android application. Create a new Empty Activity project with Android Studio and copy the files from *android-app* into it. Build the project and run the app. Under App permissions, allow Location. First switch on the Tumbller, then close the Elegoo BLE Tool if it is running, start the tumbller-speed-control app and check whether the Bluetooth LED on the Tumbller is lit.
+The *android-app* folder contains the changed and additional files of a standard Android application. Create a new Empty Activity project with Android Studio and copy the files from *android-app* into it. Build the project and run the app. Under App permissions, allow Location. First switch on the Tumbller, then close the Elegoo BLE Tool if it is running, start the **tumbller-speed-control** app and check whether the Bluetooth LED on the Tumbller is lit.
 
 <img src="android-app/screenshot.png" height="400" />
 
@@ -20,12 +20,16 @@ The Rocker Control in the Elegoo BLE Tool looks good. But it is not possible to 
 ### Extra: programmable motion
 Install TinyB from https://github.com/intel-iot-devkit/tinyb
 
-Compile it, for example:
+Compile it, for example with these commands:
 ```
-javac -cp /usr/local/lib/java/tinyb.jar -d bin tumbller/*.java
+cd programmable-motion
+javac -cp /usr/local/lib/java/tinyb.jar -d bin *.java
 ```
 Run it, for example:
 ```
 java -cp bin:/usr/local/lib/java/tinyb.jar -Djava.library.path=/usr/local/lib tumbller.ProgrammableMotion
 ```
 Have fun!
+
+#### Tumbller in action
+https://youtu.be/Gv0a-XBT6Po
