@@ -18,7 +18,7 @@
  * along with tumbller-speed-control.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.tumbller_speed_control;
+package tumbller.speed_control;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,11 +39,15 @@ public class MainActivity extends AppCompatActivity {
         Bluetooth.stop();
     }
 
-    public void buttonUpClick(View view) {
+    public void btnUpClick(View view) {
         Bluetooth.sendCommand(BluetoothKt.COMMAND_UP);
     }
 
-    public void buttonDownClick(View view) {
+    public void btnDownClick(View view) {
         Bluetooth.sendCommand(BluetoothKt.COMMAND_DOWN);
+    }
+
+    public void btnCancelClick(View view) {
+        ProgrammableMotion.cancel();
     }
 }

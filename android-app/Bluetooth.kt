@@ -18,13 +18,10 @@
  * along with tumbller-speed-control.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.tumbller_speed_control
+package tumbller.speed_control
 
 import android.bluetooth.*
-import android.bluetooth.le.ScanCallback
-import android.bluetooth.le.ScanFilter
-import android.bluetooth.le.ScanResult
-import android.bluetooth.le.ScanSettings
+import android.bluetooth.le.*
 import android.os.Handler
 import android.util.Log
 
@@ -34,7 +31,7 @@ private const val SWITCH_TO_SPEED_CONTROL = '+'.code.toByte()
 private const val EXIT_SPEED_CONTROL: Byte = -128
 const val COMMAND_DOWN: Byte = -127
 const val COMMAND_UP: Byte = -126
-private const val TAG = "tumbller_speed_control"
+private const val TAG = "tumbller-speed-control"
 
 object Bluetooth {
     private val scanner = BluetoothAdapter.getDefaultAdapter().bluetoothLeScanner
@@ -64,13 +61,13 @@ object Bluetooth {
     }
 
     @JvmStatic fun sendCommand(command: Byte) {
-        sendControlValue(byteArrayOf(command, 0))
+        sendControlValue(command, 0)
     }
 
-    @JvmStatic fun sendControlValue(controlValue: ByteArray) {
-        valueToSend = controlValue
+    @JvmStatic fun sendControlValue(first: Byte, second: Byte) {
+        valueToSend = byteArrayOf(first, second)
         valueIsToSend = true
-        if(readyToSend)
+        if (readyToSend)
             sendValue()
     }
 
@@ -82,7 +79,7 @@ object Bluetooth {
 
     private object DeviceScanCallback : ScanCallback() {
         override fun onScanResult(callbackType: Int, result: ScanResult) {
-            if(scanning) {
+            if (scanning) {
                 super.onScanResult(callbackType, result)
                 result.device?.let { device ->
                     if (result.scanRecord?.deviceName == DEVICE_NAME) {
@@ -112,14 +109,14 @@ object Bluetooth {
                 Log.d(TAG, "onServicesDiscovered: Have gatt $discoveredGatt")
                 gatt = discoveredGatt
                 gattCharacteristic = discoveredGatt.services[0].characteristics[1]
-                readyToSend = true
-                sendControlValue(byteArrayOf(SWITCH_TO_SPEED_CONTROL))
+                valueToSend = byteArrayOf(SWITCH_TO_SPEED_CONTROL)
+                sendValue()
             }
         }
 
         override fun onCharacteristicWrite(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic?, status: Int) {
             super.onCharacteristicWrite(gatt, characteristic, status)
-            if(valueIsToSend)
+            if (valueIsToSend)
                 sendValue()
             else
                 readyToSend = true

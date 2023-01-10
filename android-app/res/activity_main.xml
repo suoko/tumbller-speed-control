@@ -9,9 +9,9 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/buttonUp"
+        android:id="@+id/btnUp"
         android:text="UP"
-        android:onClick="buttonUpClick"
+        android:onClick="btnUpClick"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_margin="2dp"
@@ -22,16 +22,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/buttonDown"
+        android:id="@+id/btnDown"
         android:text="DOWN"
-        android:onClick="buttonDownClick"
+        android:onClick="btnDownClick"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_margin="2dp"
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:padding="0dp"
-        app:layout_constraintStart_toEndOf="@+id/buttonUp"
+        app:layout_constraintStart_toEndOf="@+id/btnUp"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -91,14 +91,40 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtSpeed" />
 
-    <com.github.tumbller_speed_control.TouchDisplayView
+    <tumbller.speed_control.TouchDisplayView
         android:id="@+id/touchDisplayView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonDown"
+        app:layout_constraintTop_toBottomOf="@+id/btnDown"
         app:layout_constraintBottom_toBottomOf="parent" />
+
+    <ListView
+        android:id="@+id/listView"
+        android:background="@color/white"
+        android:divider="@null"
+        android:visibility="invisible"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnDown"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <Button
+        android:id="@+id/btnCancel"
+        android:text="Cancel"
+        android:onClick="btnCancelClick"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        app:layout_constraintEnd_toEndOf="@+id/listView"
+        app:layout_constraintTop_toTopOf="@+id/listView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

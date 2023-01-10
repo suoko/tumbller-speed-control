@@ -18,22 +18,21 @@
  * along with tumbller-speed-control.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.tumbller_speed_control;
+package tumbller.speed_control;
 
-import static androidx.core.math.MathUtils.clamp;
-import static com.google.android.material.internal.ContextUtils.getActivity;
-import static java.lang.Math.abs;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.widget.TextView;
+import androidx.core.math.MathUtils;
 
 public class MotionControlPanel {
     public static final int MAX_SPEED = 80;
     private final Point maxPos;
     private final PointF factor;
-    private final byte[] prevCtrlVal = { 0, 0 };
+    private byte prevCarSpeed = 0;
+    private byte prevTurnSpeed = 0;
     private final TextView txtCarSpeed;
     private final TextView txtTurnSpeed;
 
@@ -41,8 +40,7 @@ public class MotionControlPanel {
         maxPos = new Point(width / 2, height / 2);
         factor = new PointF((float)MAX_SPEED / maxPos.x, (float)MAX_SPEED / maxPos.y);
 
-        Activity act = getActivity(context);
-        assert act != null;
+        Activity act = (Activity) context;
         txtCarSpeed = act.findViewById(R.id.txtCarSpeed);
         txtTurnSpeed = act.findViewById(R.id.txtTurnSpeed);
     }
@@ -54,32 +52,31 @@ public class MotionControlPanel {
     public void moveSpot(Point pos) {
         byte carSpeed = calcSpeed(pos.y, maxPos.y, factor.y);
         byte turnSpeed = calcSpeed(pos.x, maxPos.x, factor.x);
-        if(carSpeed >= 0)
+        if (carSpeed >= 0)
             turnSpeed = (byte) -turnSpeed;
 
         sendSpeed(carSpeed, turnSpeed);
     }
 
     byte calcSpeed(int pos, int max, float factor) {
-        pos = clamp(pos, -max, max);
+        pos = MathUtils.clamp(pos, -max, max);
         float speed = pos * factor;
-        speed = speed * abs(speed) / MAX_SPEED;
+        speed = speed * Math.abs(speed) / MAX_SPEED;
 
-        return (byte)speed;
+        return (byte) speed;
     }
 
     void sendSpeed(byte carSpeed, byte turnSpeed) {
-        if(prevCtrlVal[0] != carSpeed ||
-           prevCtrlVal[1] != turnSpeed) {
+        if (prevCarSpeed != carSpeed ||
+            prevTurnSpeed != turnSpeed) {
 
-            byte[] ctrlVal = { carSpeed, turnSpeed };
-            Bluetooth.sendControlValue(ctrlVal);
+            Bluetooth.sendControlValue(carSpeed, turnSpeed);
 
             txtCarSpeed.setText(Integer.toString(carSpeed));
             txtTurnSpeed.setText(Integer.toString(turnSpeed));
 
-            prevCtrlVal[0] = carSpeed;
-            prevCtrlVal[1] = turnSpeed;
+            prevCarSpeed = carSpeed;
+            prevTurnSpeed = turnSpeed;
         }
     }
 }

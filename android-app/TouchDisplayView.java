@@ -18,21 +18,14 @@
  * along with tumbller-speed-control.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.tumbller_speed_control;
+package tumbller.speed_control;
 
+import android.app.AlertDialog;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Point;
-import android.graphics.PointF;
-import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
+import android.graphics.*;
+import android.graphics.drawable.*;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
-import android.view.View;
+import android.view.*;
 
 public class TouchDisplayView extends View {
     private static final int CIRCLE_RADIUS_DP = 20;
@@ -40,6 +33,7 @@ public class TouchDisplayView extends View {
     private static final int COLOR_ACTIVE = 0xffff4444;
     private final int mCircleRadius;
     private final Paint mCirclePaint = new Paint();
+    private final GestureDetector mDoubleTapDetector;
     private Point mOrigin = null;
     private Rect mOriginRect = null;
     private Point mControlSpot = null;
@@ -52,6 +46,7 @@ public class TouchDisplayView extends View {
         float density = getResources().getDisplayMetrics().density;
         mCircleRadius = (int) (CIRCLE_RADIUS_DP * density);
         mCirclePaint.setColor(COLOR_IDLE);
+        mDoubleTapDetector = new GestureDetector(context, new DoubleTapDetector());
     }
 
     @Override
@@ -69,20 +64,35 @@ public class TouchDisplayView extends View {
         drawBackground();
     }
 
+    private class DoubleTapDetector extends GestureDetector.SimpleOnGestureListener {
+        @Override
+        public boolean onDoubleTap(MotionEvent e) {
+            String filename = "motion.prog";
+            new AlertDialog.Builder(getContext())
+                    .setMessage("Run " + filename + "?")
+                    .setPositiveButton("Run", (di, i) -> ProgrammableMotion.start(filename, getContext()))
+                    .setNegativeButton("Cancel", (di, i) -> {})
+                    .create()
+                    .show();
+            return true;
+        }
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        final int action = event.getAction();
-
-        switch (action & MotionEvent.ACTION_MASK) {
+        switch (event.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
-                if(mOriginRect.contains((int) event.getX(), (int) event.getY())) {
+                if (mDoubleTapDetector.onTouchEvent(event))
+                    break;
+                if (mOriginRect.contains((int) event.getX(), (int) event.getY())) {
                     mCirclePaint.setColor(COLOR_ACTIVE);
                     mSpotActive = true;
                 }
                 break;
 
             case MotionEvent.ACTION_UP:
-                if(mSpotActive) {
+                mDoubleTapDetector.onTouchEvent(event);
+                if (mSpotActive) {
                     mControlSpot.set(mOrigin.x, mOrigin.y);
                     mControlPanel.resetSpot();
                     mCirclePaint.setColor(COLOR_IDLE);
@@ -91,7 +101,7 @@ public class TouchDisplayView extends View {
                 break;
 
             case MotionEvent.ACTION_MOVE:
-                if(mSpotActive) {
+                if (mSpotActive) {
                     mControlSpot.set((int) event.getX(), (int) event.getY());
                     mControlPanel.moveSpot(toUprightCoord(mControlSpot, mOrigin));
                 }
