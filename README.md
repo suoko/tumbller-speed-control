@@ -15,9 +15,13 @@ The *android-app* folder contains the changed and additional files of a standard
 
 Now the Tumbller can be moved with the red dot. With the DOWN button it can be placed in the rest position (function 4 - Tilt Forward). Press UP and it gets back up (function 5 - Stand Up Instantly).
 
-The Rocker Control in the Elegoo BLE Tool looks good. But it is not possible to go from cornering to driving straight ahead without stopping in between.
+The Rocker Control in the Elegoo BLE Tool looks good. But it is not possible to go from cornering to driving straight ahead without stopping in between. It's difficult for old people with slow sausage fingers like me to steer the vehicle with it.
 
-### Extra: programmable motion
+**Update:** The **tumbller-speed-control** app can now also control a programmed motion sequence. Copy a CSV file named *motion.prog* into the app's data folder (*\<internal shared storage\>/Android/data/tumbller.speed_control/files*). You can find an example [here](programmable-motion/motion.prog). Each row contains three values: waiting time in tenths of a second, car speed, and turn speed. Allow the app's Storage permission. Double tap the control panel. Here is an example of a run:
+
+<img src="android-app/screenshot-progmotion.png" height="400" />
+
+### Extra: programmable motion for Linux
 Install TinyB from https://github.com/intel-iot-devkit/tinyb
 
 Compile it, for example with these commands:
