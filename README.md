@@ -6,22 +6,22 @@ Speed control for Elegoo Tumbller
 tumbller-speed-control includes an extension of the included Arduino sketch and an Android app.
 
 ### The Arduino sketch
-Only the *.ino* file and *mode.h* have been changed. *SpeedControl.h* is a new additional file. The other files of the original sketch are taken over unchanged in order to load the program onto the Tumbller with the Arduino IDE. With the new program, the functions and modes of the old program will continue to work. Also the Elegoo BLE Tool works (if the tumbller-speed-control app is not running).
+Only the [.ino](tumbller-speed-control.ino) file and [mode.h](mode.h) have been changed. [SpeedControl.h](SpeedControl.h) is a new additional file. The other files of the original sketch are taken over unchanged in order to load the program onto the Tumbller with the Arduino IDE. With the new program, the functions and modes of the old program will continue to work. Also the Elegoo BLE Tool works (if the tumbller-speed-control app is not running).
 
 ### The Android app
-The *android-app* folder contains the changed and additional files of a standard Android application. Create a new Empty Activity project with Android Studio and copy the files from *android-app* into it. Build the project and run the app. Under App permissions, allow Location. First switch on the Tumbller, then close the Elegoo BLE Tool if it is running, start the **tumbller-speed-control** app and check whether the Bluetooth LED on the Tumbller is lit.
+The [android-app](android-app) folder contains the changed and additional files of a standard Android application. Create a new *Empty Activity* project with Android Studio and copy the files from [android-app](android-app) into it. Build the project and run the app. Under App permissions, allow *Location*. First switch on the Tumbller, then close the Elegoo BLE Tool if it is running, start the **tumbller-speed-control** app and check whether the Bluetooth LED on the Tumbller is lit.
 
 <img src="android-app/screenshot.png" height="400" />
 
-Now the Tumbller can be moved with the red dot. With the DOWN button it can be placed in the rest position (function 4 - Tilt Forward). Press UP and it gets back up (function 5 - Stand Up Instantly).
+Now the Tumbller can be moved with the red dot. With the *DOWN* button it can be placed in the rest position (function 4 - Tilt Forward). Press *UP* and it gets back up (function 5 - Stand Up Instantly).
 
 The Rocker Control in the Elegoo BLE Tool looks good. But it is not possible to go from cornering to driving straight ahead without stopping in between. It's difficult for old people with slow sausage fingers like me to steer the vehicle with it.
 
-**Update:** The **tumbller-speed-control** app can now also control a programmed motion sequence. Copy a CSV file named *motion.prog* into the app's data folder (*\<internal shared storage\>/Android/data/tumbller.speed_control/files*). You can find an example [here](programmable-motion/motion.prog). Each row contains three values: waiting time in tenths of a second, car speed, and turn speed. Allow the app's Storage permission. Double tap the control panel. Here is an example of a run:
+**Update:** The **tumbller-speed-control** app can now also control a programmed motion sequence. Copy a CSV file named *motion.prog* into the app's data folder (*\<internal shared storage\>/Android/data/tumbller.speed_control/files*). You can find an example [here](programmable-motion/motion.prog). Each row contains three values: waiting time in tenths of a second, car speed, and turn speed. Allow the app's *Storage* permission. Double tap the control panel to start the run. Here is an example:
 
 <img src="android-app/screenshot-progmotion.png" height="400" />
 
-### Extra: programmable motion for Linux
+### Extra: [programmable motion](programmable-motion) for Linux
 Install TinyB from https://github.com/intel-iot-devkit/tinyb
 
 Compile it, for example with these commands:
