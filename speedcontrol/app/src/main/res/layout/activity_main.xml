@@ -1,18 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/darker_gray"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/btnUp"
+        android:text="UP"
+        android:onClick="btnUpClick"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="2dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:padding="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnDown"
+        android:text="DOWN"
+        android:onClick="btnDownClick"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:padding="0dp"
+        app:layout_constraintStart_toEndOf="@+id/btnUp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtSpeed"
+        android:text="Speed"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        app:layout_constraintStart_toStartOf="@+id/txtCar"
+        app:layout_constraintEnd_toEndOf="@+id/txtTurnSpeed"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtCar"
+        android:text="Car:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        app:layout_constraintEnd_toStartOf="@+id/txtCarSpeed"
+        app:layout_constraintTop_toBottomOf="@+id/txtSpeed" />
+
+    <TextView
+        android:id="@+id/txtCarSpeed"
+        android:text="0"
+        android:textAlignment="textEnd"
+        android:background="@color/white"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        app:layout_constraintEnd_toStartOf="@+id/txtTurn"
+        app:layout_constraintTop_toBottomOf="@+id/txtSpeed" />
+
+    <TextView
+        android:id="@+id/txtTurn"
+        android:text="Turn:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        app:layout_constraintEnd_toStartOf="@+id/txtTurnSpeed"
+        app:layout_constraintTop_toBottomOf="@+id/txtSpeed" />
+
+    <TextView
+        android:id="@+id/txtTurnSpeed"
+        android:text="0"
+        android:textAlignment="textEnd"
+        android:background="@color/white"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtSpeed" />
+
+    <tumbller.speed_control.TouchDisplayView
+        android:id="@+id/touchDisplayView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnDown"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <ListView
+        android:id="@+id/listView"
+        android:background="@color/white"
+        android:divider="@null"
+        android:visibility="invisible"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnDown"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <Button
+        android:id="@+id/btnCancel"
+        android:text="Cancel"
+        android:onClick="btnCancelClick"
+        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        app:layout_constraintEnd_toEndOf="@+id/listView"
+        app:layout_constraintTop_toTopOf="@+id/listView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
